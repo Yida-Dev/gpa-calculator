@@ -17,11 +17,16 @@ const {
   faqs
 } = Astro.props;
 
+const siteUrl = 'https://gpacalc.app';
 const siteName = 'GPACalc';
 const fullTitle = `${title} | ${siteName}`;
 
-// WebApplication Schema for calculator pages
-const calculatorSchema = schema ? JSON.stringify(schema) : null;
+// Make OG image absolute URL
+const absoluteOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+
+// Inject url into schema if it has @type
+const enrichedSchema = schema ? { ...schema, url: canonical } : null;
+const calculatorSchema = enrichedSchema ? JSON.stringify(enrichedSchema) : null;
 
 // FAQ Schema
 const faqSchema = faqs?.length ? JSON.stringify({
@@ -49,7 +54,7 @@ const faqSchema = faqs?.length ? JSON.stringify({
 <meta property="og:url" content={canonical} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={ogImage} />
+<meta property="og:image" content={absoluteOgImage} />
 <meta property="og:site_name" content={siteName} />
 
 <!-- Twitter -->
@@ -57,7 +62,7 @@ const faqSchema = faqs?.length ? JSON.stringify({
 <meta property="twitter:url" content={canonical} />
 <meta property="twitter:title" content={fullTitle} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={ogImage} />
+<meta property="twitter:image" content={absoluteOgImage} />
 
 <!-- Schema.org -->
 {calculatorSchema && (
