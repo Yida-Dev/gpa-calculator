@@ -14,9 +14,10 @@ interface Props {
   schema?: object;
   faqs?: Array<{ question: string; answer: string }>;
   currentSchool?: string;
+  breadcrumbs?: Array<{ name: string; url: string }>;
 }
 
-const { title, description, canonical, schema, faqs, currentSchool } = Astro.props;
+const { title, description, canonical, schema, faqs, currentSchool, breadcrumbs } = Astro.props;
 const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT || 'ca-pub-9622161915145913';
 const adStrategy = import.meta.env.PUBLIC_AD_STRATEGY || 'performance';
 const adAutoAds = (import.meta.env.PUBLIC_ADSENSE_AUTO_ADS || '').toLowerCase() === 'true';
@@ -76,6 +77,7 @@ const sidebarSchoolGroups = regionOrder
       canonical={canonical}
       schema={schema}
       faqs={faqs}
+      breadcrumbs={breadcrumbs}
     />
 
     <UmamiAnalytics />

@@ -7,6 +7,7 @@ interface Props {
   schema?: object;
   faqs?: Array<{ question: string; answer: string }>;
   alternates?: Array<{ hreflang: string; href: string }>;
+  breadcrumbs?: Array<{ name: string; url: string }>;
 }
 
 const {
@@ -16,7 +17,8 @@ const {
   ogImage = '/og-default.png',
   schema,
   faqs,
-  alternates = []
+  alternates = [],
+  breadcrumbs
 } = Astro.props;
 
 const siteUrl = 'https://gpacalc.app';
@@ -65,6 +67,18 @@ const faqSchema = faqs?.length ? JSON.stringify({
     }
   }))
 }) : null;
+
+// BreadcrumbList Schema
+const breadcrumbSchema = breadcrumbs?.length ? JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbs.map((item, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": item.name,
+    "item": item.url
+  }))
+}) : null;
 ---
 
 <!-- Primary Meta Tags -->
@@ -98,6 +112,10 @@ const faqSchema = faqs?.length ? JSON.stringify({
 
 {faqSchema && (
   <script type="application/ld+json" set:html={faqSchema} />
+)}
+
+{breadcrumbSchema && (
+  <script type="application/ld+json" set:html={breadcrumbSchema} />
 )}
 
 <!-- Organization Schema -->
