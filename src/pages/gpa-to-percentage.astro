@@ -71,7 +71,10 @@ const conversionTable = [
 ];
 ---
 
-<ToolLayout title={title} description={description} schema={schema} faqs={faqs}>
+<ToolLayout title={title} description={description} schema={schema} faqs={faqs} breadcrumbs={[
+  { name: 'Home', url: 'https://gpacalc.app/' },
+  { name: 'GPA to Percentage', url: 'https://gpacalc.app/gpa-to-percentage/' }
+]}>
   <section class="mb-6">
     <h1 class="text-3xl md:text-4xl font-extrabold text-stone-900 mb-3 tracking-tight">
       GPA to Percentage Converter

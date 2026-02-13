@@ -40,7 +40,10 @@ const faqs = [
 ];
 ---
 
-<ToolLayout title={title} description={description} schema={schema} faqs={faqs}>
+<ToolLayout title={title} description={description} schema={schema} faqs={faqs} breadcrumbs={[
+  { name: 'Home', url: 'https://gpacalc.app/' },
+  { name: 'Percentage to GPA', url: 'https://gpacalc.app/percentage-to-gpa/' }
+]}>
   <section class="mb-6">
     <h1 class="text-3xl md:text-4xl font-extrabold text-stone-900 mb-3 tracking-tight">Percentage to GPA Converter</h1>
     <p class="text-lg text-stone-500 font-medium max-w-2xl">

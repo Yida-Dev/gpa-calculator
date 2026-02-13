@@ -66,7 +66,11 @@ const relatedSchools = schools
   .slice(0, 6);
 ---
 
-<ToolLayout title={title} description={description} schema={schema} faqs={faqs} currentSchool={school.id}>
+<ToolLayout title={title} description={description} schema={schema} faqs={faqs} currentSchool={school.id} breadcrumbs={[
+  { name: 'Home', url: 'https://gpacalc.app/' },
+  { name: 'Schools', url: 'https://gpacalc.app/schools/' },
+  { name: `${school.shortName} GPA Calculator`, url: `https://gpacalc.app/schools/${school.id}/` }
+]}>
   <section class="mb-6">
     <div class="flex items-center gap-2 mb-3">
       <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 text-sm font-semibold">{school.country}</span>
