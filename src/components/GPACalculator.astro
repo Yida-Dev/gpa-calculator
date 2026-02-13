@@ -664,9 +664,34 @@ const { initialSchool = '' } = Astro.props;
       upsi: 'um', umt: 'um', uthm: 'um', usim: 'um', umpsa: 'um',
       unimap: 'um', utem: 'um', unisza: 'um', umk: 'um', upnm: 'um'
     };
-    const mappedSchool = initialSchool ? (schoolMap[initialSchool] || '') : '';
+    let mappedSchool = initialSchool ? (schoolMap[initialSchool] || '') : '';
+
+    // Auto-detect scale from timezone when no school is specified (homepage)
+    if (!mappedSchool) {
+      try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const tzScaleMap: Record<string, string> = {
+          'Asia/Singapore': 'nus',
+          'Asia/Kuala_Lumpur': 'um',
+          'Asia/Kolkata': 'india-cgpa',
+          'Asia/Calcutta': 'india-cgpa',
+        };
+        if (tzScaleMap[tz]) {
+          mappedSchool = tzScaleMap[tz];
+        } else if (tz.startsWith('America/')) {
+          mappedSchool = 'us-standard';
+        }
+      } catch {
+        // Intl not supported, keep empty
+      }
+    }
+
     schoolSelect.value = mappedSchool;
     currentSchool = mappedSchool;
+    if (mappedSchool) {
+      updateGradeOptions();
+      calculate();
+    }
 
     schoolSelect.addEventListener('change', () => {
       currentSchool = schoolSelect.value;
